@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>??</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    a {
+      padding: 12px 24px;
+      background-color: #ff69b4;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 20px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      position: relative;
+      z-index: 30;
+      user-select: none;
+    }
+    a:hover {
+      background-color: #ff1493;
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 25;
+    }
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffc0cb;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      font-size: 22px;
+      color: #333;
+      text-align: center;
+      z-index: 30;
+      min-width: 220px;
+      min-height: 150px;
+    }
+    #popup .jtm {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #555;
+    }
+    /* gros coeur svg derrière */
+    #bigHeart {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 28;
+      filter: drop-shadow(0 0 8px #ff1493);
+    }
+    #bigHeart.animate {
+      animation: heartGrowFade 2.5s forwards;
+    }
+    @keyframes heartGrowFade {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      50% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay"></div>
+  <svg id="bigHeart" viewBox="0 0 24 24" fill="#ff1493" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+    4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+    14.76 3 16.5 3 19.58 3 22 5.42 
+    22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+
+  <a id="clicButton" onclick="showPopup()">Clique ici</a>
+
+  <div id="popup">
+    Tu es le plus fort
+    <div class="jtm">jtm</div>
+  </div>
+
+  <script>
+    function showPopup() {
+      const popup = document.getElementById('popup');
+      const overlay = document.getElementById('overlay');
+      const bigHeart = document.getElementById('bigHeart');
+      const button = document.getElementById('clicButton');
+
+      // Cacher le bouton dès qu'on clique
+      button.style.display = 'none';
+
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+
+      // Reset animation
+      bigHeart.classList.remove('animate');
+      void bigHeart.offsetWidth;  // relance l'animation
+      bigHeart.classList.add('animate');
+
+      setTimeout(() => {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+        bigHeart.classList.remove('animate');
+        // Réafficher le bouton après animation
+        button.style.display = 'inline-block';
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
